@@ -9,6 +9,7 @@ exports.onlineNode=function(req,res,next){
       WS.on('message', function incoming(data) {
         console.log("list",data);
             res.send(data)
+            return
             WS.close()
       });
 }
@@ -32,9 +33,14 @@ exports.onlineNodesAllPcs=function(req,res,next){
       });
        
       WS.on('message', function incoming(data) {
-        console.log("availableocs");
-            res.send(data)
-            // WS.close()
+        
+            let obj=JSON.parse(data)
+            res.send({code:-0,data:obj})
+            if(obj.res!=undefined){
+                WS.close()
+            }
+            return
+            
       });
 
 
