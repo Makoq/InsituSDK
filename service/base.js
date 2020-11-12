@@ -9,8 +9,8 @@ exports.onlineNode=function(req,res,next){
       WS.on('message', function incoming(data) {
         console.log("list",data);
             res.send(data)
-            return
             WS.close()
+            return
       });
 }
 
