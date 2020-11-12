@@ -4,3 +4,5 @@ const base=require('../service/base.js')
 exports.onlineNodes=base.onlineNode;
 //获取对应节点所有处理服务
 exports.onlineNodesAllPcs=base.onlineNodesAllPcs;
+//执行
+exports.excuteProcess=base.excuteProcess;

@@ -17,9 +17,15 @@ app.all('*', function (req, res, next) {
     if (req.method == "OPTIONS") res.send(200);/*让options请求快速返回*/
     else next();
 });
+let ws=new WebSocket('ws://111.229.14.128:1708');
+ws.on('open',()=>{
+    console.log("open websocket connection")
+    ws.send('{ "msg":"regist","token":"connlist" }')
+
+})
 
 var wsClient = function (req, res, next) {
-    req.wsClient = new WebSocket('ws://111.229.14.128:1708');
+    req.wsClient = ws
     next()
 }
 app.use(wsClient)
@@ -28,11 +34,18 @@ app.use(wsClient)
 // 获取当前在线节点token
 app.get('/onlineNodes', router.onlineNodes)
 
+
+
 // 获取对应在线节点处理服务
 // 参数 token,type
 // 注意将token encode
-
 app.get('/onlineNodesAllPcs', router.onlineNodesAllPcs)
+
+
+// 执行响应处理方法
+// 参数 dataId,pcsId,params,name,token,reqUsrOid
+// 注意将token encode
+app.get('/extPcs', router.excuteProcess)
 
 
 
