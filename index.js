@@ -93,6 +93,8 @@ app.get('/capability',router.metaInfo)
 app.post('/test',router.test)
 
 
+app.post('/upload',router.upload)
+
 
 app.listen(port, () => console.log(`app run on port ${port}!`))
 

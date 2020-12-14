@@ -20,3 +20,5 @@ exports.distributedData=base.distributedData;
 
 // test
 exports.test=test.test;
+
+exports.upload=test.upload;
