@@ -4,6 +4,7 @@ const app = express()
 const port = 8898
 var bodyParser = require("body-parser");
 const WebSocket = require('ws'); 
+const { Parser } = require('xml2js');
 // const ws = new WebSocket('ws://111.229.14.128:1708');
 
 // app.use(bodyParser.json());
@@ -51,7 +52,10 @@ var wsClient = function (req, res, next) {
 app.use(wsClient)
 
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: false,
+    limit: '50mb',
+    extended: true, 
+    parameterLimit:50000
 }));
 
 // 获取当前在线节点token
@@ -81,6 +85,18 @@ app.get('/invokeDistributedPcs',router.invokeDistributedPc)
 // 参数 token,pcsId,url,params,服务节点token标识，处理方法标识pcsId,外部数据url,处理方法可能的参数（没有的话可不填）params
 app.post('/invokeUrlDataPcs',router.invokeUrlDataPcs)
 
+// 执行处理方法
+// 基于多个url，测试数据
+// 参数 token,pcsId,url,params,服务节点token标识，处理方法标识pcsId,外部数据url,处理方法可能的参数（没有的话可不填）params
+app.post('/invokeUrlsDataPcs',router.invokeUrlsDataPcs)
+
+// 执行处理方法
+// 基于多个url,外部数据,任意数据名称
+// 参数 token,pcsId,url,params,服务节点token标识，处理方法标识pcsId,外部数据url,处理方法可能的参数（没有的话可不填）params
+app.post('/invokeExternalUrlsDataPcs',bodyParser.json(),router.invokeExternalUrlsDataPcs)
+
+
+
 
 // 分布式节点文件获取
 app.get('/fileObtain',router.distributedData)
@@ -88,8 +104,15 @@ app.get('/fileObtain',router.distributedData)
 // 获取文件元数据
 app.get('/capability',router.metaInfo)
  
+// 获取
 
 // 测试
+// app.use(bodyParser.json({
+//     extended: false,
+//     limit: '50mb',
+//     extended: true, 
+//     parameterLimit:50000
+// }));
 app.post('/test',router.test)
 
 
